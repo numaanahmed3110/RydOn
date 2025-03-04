@@ -1,6 +1,7 @@
 # Backend Documentation
 
 ## Project Structure
+
 ```
 backend/
 │
@@ -20,6 +21,7 @@ backend/
 ```
 
 ## Files Overview
+
 - `user.controller.js`: Handles HTTP request/response logic
 - `usermodel.js`: Defines user schema and authentication methods
 - `user.routes.js`: Defines API endpoints and validation
@@ -31,50 +33,123 @@ backend/
 ## API Endpoints
 
 ### Register User
+
 Register a new user in the system.
 
 **Endpoint:** `POST /users/register`
 
 **Request Body:**
+
 ```json
 {
-    "fullname": {
-        "firstname": "string",    // Required, min length: 3
-        "lastname": "string"      // Optional, min length: 3
-    },
-    "email": "string",         // Required, valid email
-    "password": "string"       // Required, min length: 6
+  "fullname": {
+    "firstname": "string", // Required, min length: 3
+    "lastname": "string" // Optional, min length: 3
+  },
+  "email": "string", // Required, valid email
+  "password": "string" // Required, min length: 6
 }
 ```
 
 **Response:**
+
 - Success (200):
+
 ```json
 {
-    "token": "JWT_TOKEN",
-    "user": {
-        "fullname": {
-            "firstname": "string",
-            "lastname": "string"
-        },
-        "email": "string",
-        "_id": "string"
-    }
+  "token": "JWT_TOKEN",
+  "user": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "_id": "string"
+  }
 }
 ```
+
 - Error (400):
+
 ```json
 {
-    "errors": [
-        {
-            "msg": "Error message",
-            "param": "field_name"
-        }
-    ]
+  "errors": [
+    {
+      "msg": "Error message",
+      "param": "field_name"
+    }
+  ]
 }
 ```
 
 **Validation Rules:**
+
 - Email must be valid
 - Firstname must be at least 3 characters long
 - Password must be at least 6 characters long
+
+### Login User
+
+Authenticate an existing user and get access token.
+
+**Endpoint:** `POST /users/login`
+
+**Request Body:**
+
+```json
+{
+  "email": "string", // Required, valid email
+  "password": "string" // Required
+}
+```
+
+**Response:**
+
+- Success (200):
+
+```json
+{
+  "token": "JWT_TOKEN",
+  "user": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "_id": "string"
+  }
+}
+```
+
+- Error (401):
+
+```json
+{
+  "message": "Invalid credentials"
+}
+```
+
+- Error (400):
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Error message",
+      "param": "field_name"
+    }
+  ]
+}
+```
+
+**Validation Rules:**
+
+- Email must be valid
+- Password is required
+
+**Notes:**
+
+- Returns JWT token for authenticated requests
+- User password is never returned in the response
+- Invalid credentials will return a 401 status code
+- Invalid request format will return a 400 status code
