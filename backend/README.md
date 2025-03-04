@@ -1,0 +1,80 @@
+# Backend Documentation
+
+## Project Structure
+```
+backend/
+│
+├── controllers/
+│   └── user.controller.js     # User-related controller logic
+├── models/
+│   └── usermodel.js          # User database model schema
+├── routes/
+│   └── user.routes.js        # User route definitions
+├── service/
+│   └── user.service.js       # User business logic
+├── db/
+│   └── db.js                # Database connection setup
+├── app.js                    # Express application setup
+├── server.js                 # Server initialization
+└── readme.md                 # Documentation (this file)
+```
+
+## Files Overview
+- `user.controller.js`: Handles HTTP request/response logic
+- `usermodel.js`: Defines user schema and authentication methods
+- `user.routes.js`: Defines API endpoints and validation
+- `user.service.js`: Contains business logic for user operations
+- `app.js`: Main Express application configuration
+- `server.js`: Server startup configuration
+- `db.js`: MongoDB connection handling
+
+## API Endpoints
+
+### Register User
+Register a new user in the system.
+
+**Endpoint:** `POST /users/register`
+
+**Request Body:**
+```json
+{
+    "fullname": {
+        "firstname": "string",    // Required, min length: 3
+        "lastname": "string"      // Optional, min length: 3
+    },
+    "email": "string",         // Required, valid email
+    "password": "string"       // Required, min length: 6
+}
+```
+
+**Response:**
+- Success (200):
+```json
+{
+    "token": "JWT_TOKEN",
+    "user": {
+        "fullname": {
+            "firstname": "string",
+            "lastname": "string"
+        },
+        "email": "string",
+        "_id": "string"
+    }
+}
+```
+- Error (400):
+```json
+{
+    "errors": [
+        {
+            "msg": "Error message",
+            "param": "field_name"
+        }
+    ]
+}
+```
+
+**Validation Rules:**
+- Email must be valid
+- Firstname must be at least 3 characters long
+- Password must be at least 6 characters long
