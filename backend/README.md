@@ -32,11 +32,14 @@ backend/
 
 ## API Endpoints
 
-### Register User
+---
 
-Register a new user in the system.
+### 🔐 Authentication
 
-**Endpoint:** `POST /users/register`
+#### 1️⃣ Register User
+
+<details>
+<summary><code>POST /users/register</code> - Create new user account</summary>
 
 **Request Body:**
 
@@ -53,7 +56,7 @@ Register a new user in the system.
 
 **Response:**
 
-- Success (200):
+- ✅ Success (200):
 
 ```json
 {
@@ -69,7 +72,7 @@ Register a new user in the system.
 }
 ```
 
-- Error (400):
+- ❌ Error (400):
 
 ```json
 {
@@ -84,15 +87,15 @@ Register a new user in the system.
 
 **Validation Rules:**
 
-- Email must be valid
-- Firstname must be at least 3 characters long
-- Password must be at least 6 characters long
+- 📧 Email must be valid
+- 📝 Firstname must be at least 3 characters long
+- 🔑 Password must be at least 6 characters long
+</details>
 
-### Login User
+#### 2️⃣ Login User
 
-Authenticate an existing user and get access token.
-
-**Endpoint:** `POST /users/login`
+<details>
+<summary><code>POST /users/login</code> - Authenticate existing user</summary>
 
 **Request Body:**
 
@@ -105,7 +108,7 @@ Authenticate an existing user and get access token.
 
 **Response:**
 
-- Success (200):
+- ✅ Success (200):
 
 ```json
 {
@@ -121,7 +124,7 @@ Authenticate an existing user and get access token.
 }
 ```
 
-- Error (401):
+- ❌ Error (401):
 
 ```json
 {
@@ -129,7 +132,7 @@ Authenticate an existing user and get access token.
 }
 ```
 
-- Error (400):
+- ❌ Error (400):
 
 ```json
 {
@@ -144,12 +147,15 @@ Authenticate an existing user and get access token.
 
 **Validation Rules:**
 
-- Email must be valid
-- Password is required
+- 📧 Email must be valid
+- 🔑 Password is required
 
 **Notes:**
 
-- Returns JWT token for authenticated requests
-- User password is never returned in the response
-- Invalid credentials will return a 401 status code
-- Invalid request format will return a 400 status code
+- 🎫 Returns JWT token for authenticated requests
+- 🔒 User password is never returned in the response
+- ⚠️ Invalid credentials will return a 401 status code
+- ❌ Invalid request format will return a 400 status code
+</details>
+
+---
