@@ -8,9 +8,12 @@ backend/
 ├── controllers/
 │   └── user.controller.js     # User-related controller logic
 ├── models/
-│   └── usermodel.js          # User database model schema
+│   ├── usermodel.js          # User database model schema
+│   └── blacklisttoken.model.js # Token blacklist for logout
 ├── routes/
 │   └── user.routes.js        # User route definitions
+├── middleware/
+│   └── auth.middleware.js    # Authentication middleware
 ├── service/
 │   └── user.service.js       # User business logic
 ├── db/
@@ -24,7 +27,9 @@ backend/
 
 - `user.controller.js`: Handles HTTP request/response logic
 - `usermodel.js`: Defines user schema and authentication methods
+- `blacklisttoken.model.js`: Manages blacklisted JWT tokens
 - `user.routes.js`: Defines API endpoints and validation
+- `auth.middleware.js`: Handles authentication validation
 - `user.service.js`: Contains business logic for user operations
 - `app.js`: Main Express application configuration
 - `server.js`: Server startup configuration
@@ -156,6 +161,102 @@ backend/
 - 🔒 User password is never returned in the response
 - ⚠️ Invalid credentials will return a 401 status code
 - ❌ Invalid request format will return a 400 status code
+</details>
+
+#### 3️⃣ Get User Profile
+
+<details>
+<summary><code>GET /users/profile</code> - Get authenticated user's profile</summary>
+
+**Headers Required:**
+
+```
+Authorization: Bearer JWT_TOKEN
+```
+
+or
+
+```
+Cookie: token=JWT_TOKEN
+```
+
+**Response:**
+
+- ✅ Success (200):
+
+```json
+{
+  "fullname": {
+    "firstname": "string",
+    "lastname": "string"
+  },
+  "email": "string",
+  "_id": "string"
+}
+```
+
+- ❌ Error (401):
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+**Notes:**
+
+- 🔒 Requires valid JWT token
+- 🎫 Token can be sent via Authorization header or cookie
+- ⚠️ Invalid/expired token will return 401 status code
+</details>
+
+#### 4️⃣ Logout User
+
+<details>
+<summary><code>GET /users/logout</code> - Logout current user</summary>
+
+**Headers Required:**
+
+```
+Authorization: Bearer JWT_TOKEN
+```
+
+or
+
+```
+Cookie: token=JWT_TOKEN
+```
+
+**Response:**
+
+- ✅ Success (200):
+
+```json
+{
+  "message": "User Logged out"
+}
+```
+
+- ❌ Error (401):
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+**What happens on logout:**
+
+- 🔓 Clears authentication cookie
+- ⛔ Adds token to blacklist
+- 🚫 Blacklisted tokens cannot be reused
+- ⏱️ Blacklisted tokens are automatically removed after 24 hours
+
+**Notes:**
+
+- 🔒 Requires valid JWT token
+- 🎫 Token can be sent via Authorization header or cookie
+- ⚠️ Invalid/expired token will return 401 status code
 </details>
 
 ---
