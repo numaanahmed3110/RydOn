@@ -1,4 +1,4 @@
-const blacklisttokenModel = require("../models/blacklisttoken.model");
+const blacklisttokenModel = require("../models/blacklistToken.model");
 const userModel = require("../models/usermodel");
 const userService = require("../service/user.service");
 const { validationResult } = require("express-validator");
@@ -11,6 +11,12 @@ module.exports.registerUser = async (req, res, next) => {
     });
   }
   const { fullname, email, password } = req.body;
+  const userAlreadyExists = await userModel.findOne({ email });
+  if (userAlreadyExists) {
+    res.status(400).json({
+      message: "User already Exists",
+    });
+  }
 
   const hashPassword = await userModel.hashPassword(password);
 
