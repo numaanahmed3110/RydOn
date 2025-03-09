@@ -1,7 +1,6 @@
 # Backend Documentation
 
 ## Project Structure
-
 ```
 backend/
 │
