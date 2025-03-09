@@ -335,3 +335,171 @@ Cookie: token=JWT_TOKEN
 - 💺 Vehicle capacity must be at least 1
 - 🚖 Vehicle type must be one of: car, auto, motorcycle
 </details>
+
+#### 2️⃣ Login Captain
+
+<details>
+<summary><code>POST /captains/login</code> - Authenticate existing captain</summary>
+
+**Request Body:**
+
+```json
+{
+  "email": "string", // Required, valid email
+  "password": "string" // Required
+}
+```
+
+**Response:**
+
+- ✅ Success (200):
+
+```json
+{
+  "token": "JWT_TOKEN",
+  "user": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "_id": "string",
+    "vehicle": {
+      "color": "string",
+      "plate": "string",
+      "capacity": "number",
+      "vehicleType": "string"
+    },
+    "status": "string"
+  }
+}
+```
+
+- ❌ Error (401):
+
+```json
+{
+  "message": "Invalid credentials"
+}
+```
+
+**Validation Rules:**
+
+- 📧 Email must be valid
+- 🔑 Password is required
+
+**Notes:**
+
+- 🎫 Returns JWT token for authenticated requests
+- 🔒 Password is never returned in the response
+- ⚠️ Invalid credentials return 401 status code
+</details>
+
+#### 3️⃣ Get Captain Profile
+
+<details>
+<summary><code>GET /captains/profile</code> - Get authenticated captain's profile</summary>
+
+**Headers Required:**
+
+```
+Authorization: Bearer JWT_TOKEN
+```
+
+or
+
+```
+Cookie: token=JWT_TOKEN
+```
+
+**Response:**
+
+- ✅ Success (200):
+
+```json
+{
+  "captain": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "_id": "string",
+    "vehicle": {
+      "color": "string",
+      "plate": "string",
+      "capacity": "number",
+      "vehicleType": "string"
+    },
+    "status": "string",
+    "location": {
+      "lat": "number",
+      "lng": "number"
+    }
+  }
+}
+```
+
+- ❌ Error (401):
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+**Notes:**
+
+- 🔒 Requires valid JWT token
+- 🎫 Token can be sent via Authorization header or cookie
+- ⚠️ Invalid/expired token will return 401 status code
+</details>
+
+#### 4️⃣ Logout Captain
+
+<details>
+<summary><code>POST /captains/logout</code> - Logout current captain</summary>
+
+**Headers Required:**
+
+```
+Authorization: Bearer JWT_TOKEN
+```
+
+or
+
+```
+Cookie: token=JWT_TOKEN
+```
+
+**Response:**
+
+- ✅ Success (200):
+
+```json
+{
+  "message": "Captain Logged out Successfully"
+}
+```
+
+- ❌ Error (401):
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+**What happens on logout:**
+
+- 🔓 Clears authentication cookie
+- ⛔ Adds token to blacklist
+- 🚫 Blacklisted tokens cannot be reused
+- ⏱️ Blacklisted tokens are automatically removed after 24 hours
+
+**Notes:**
+
+- 🔒 Requires valid JWT token
+- 🎫 Token can be sent via Authorization header or cookie
+- ⚠️ Invalid/expired token will return 401 status code
+</details>
