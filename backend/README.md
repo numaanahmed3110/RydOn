@@ -39,7 +39,7 @@ backend/
 
 ---
 
-### 🔐 Authentication
+### 🔐 USER Authentication
 
 #### 1️⃣ Register User
 
