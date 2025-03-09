@@ -260,3 +260,78 @@ Cookie: token=JWT_TOKEN
 </details>
 
 ---
+
+### 🚗 Captain Management
+
+#### 1️⃣ Register Captain
+
+<details>
+<summary><code>POST /captains/register</code> - Create new captain account</summary>
+
+**Request Body:**
+
+```json
+{
+  "fullname": {
+    "firstname": "string", // Required, min length: 3
+    "lastname": "string" // Optional, min length: 3
+  },
+  "email": "string", // Required, valid email
+  "password": "string", // Required, min length: 6
+  "vehicle": {
+    "color": "string", // Required, min length: 3
+    "plate": "string", // Required, min length: 3
+    "capacity": "number", // Required, min: 1
+    "vehicleType": "string" // Required, enum: ["car", "auto", "motorcycle"]
+  }
+}
+```
+
+**Response:**
+
+- ✅ Success (200):
+
+```json
+{
+  "token": "JWT_TOKEN",
+  "captain": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "_id": "string",
+    "vehicle": {
+      "color": "string",
+      "plate": "string",
+      "capacity": "number",
+      "vehicleType": "string"
+    },
+    "status": "inactive"
+  }
+}
+```
+
+- ❌ Error (400):
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Error message",
+      "param": "field_name"
+    }
+  ]
+}
+```
+
+**Validation Rules:**
+
+- 📧 Email must be valid and unique
+- 📝 Firstname must be at least 3 characters long
+- 🔑 Password must be at least 6 characters long
+- 🚗 Vehicle color must be at least 3 characters long
+- 🚙 Vehicle plate must be at least 3 characters long
+- 💺 Vehicle capacity must be at least 1
+- 🚖 Vehicle type must be one of: car, auto, motorcycle
+</details>
