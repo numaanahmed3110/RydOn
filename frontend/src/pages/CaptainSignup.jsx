@@ -14,7 +14,7 @@ const CaptainSignup = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     setuserData({
-      username: {
+      fullname: {
         firstName: firstName,
         lastName: lastName
       },
@@ -86,7 +86,7 @@ const CaptainSignup = () => {
           </button>
 
           <p className=' text-center'>Already a Registered Rider?
-            <Link to="/login" className='text-blue-600'> Login here</Link>
+            <Link to="/captain-login" className='text-blue-600'> Login here</Link>
           </p>
 
 

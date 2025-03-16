@@ -1,27 +1,40 @@
 import React from 'react'
 import blackImage from "../assets/Uber_logo_2018.png"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-
+import axios from "axios";
+import { userDataContext } from "../context/UserContext"
 
 const UserSignup = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
-  const [userData, setuserData] = useState({});
+  // const [userData, setuserData] = useState({});
+  const navigate = useNavigate()
+  const { user, setuser } = React.useContext(userDataContext)
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault()
-    setuserData({
-      username: {
+    const newUser = {
+      fullname: {
         firstName: firstName,
         lastName: lastName
       },
       email: email,
       password: password
-    })
-    console.log(userData)
+    }
+
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser)
+
+    if (response.status === 201) {
+      const data = response.data
+      setuser(data.user)
+
+      navigate('/login')
+    }
+
+
     setfirstName("")
     setlastName("")
     setemail("")
