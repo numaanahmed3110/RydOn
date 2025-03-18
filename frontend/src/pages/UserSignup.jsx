@@ -1,25 +1,25 @@
 import React from 'react'
 import blackImage from "../assets/Uber_logo_2018.png"
 import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import axios from "axios";
 import { userDataContext } from "../context/UserContext"
 
 const UserSignup = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  const [firstName, setfirstName] = useState("");
-  const [lastName, setlastName] = useState("");
+  const [firstname, setfirstname] = useState("");
+  const [lastname, setlastname] = useState("");
   // const [userData, setuserData] = useState({});
   const navigate = useNavigate()
-  const { user, setuser } = React.useContext(userDataContext)
+  const { user, setUser } = useContext(userDataContext)
 
   const submitHandler = async (e) => {
     e.preventDefault()
     const newUser = {
       fullname: {
-        firstName: firstName,
-        lastName: lastName
+        firstname: firstname,
+        lastname: lastname
       },
       email: email,
       password: password
@@ -29,14 +29,14 @@ const UserSignup = () => {
 
     if (response.status === 201) {
       const data = response.data
-      setuser(data.user)
+      setUser(data.user)
 
-      navigate('/login')
+      navigate('/home')
     }
 
 
-    setfirstName("")
-    setlastName("")
+    setfirstname("")
+    setlastname("")
     setemail("")
     setpassword("")
   }
@@ -53,18 +53,18 @@ const UserSignup = () => {
             <input className='bg-[#efefef]  w-1/2 rounded px-4 py-2 border-grey text-base placeholder:text-small '
               required
               type="text"
-              value={firstName}
+              value={firstname}
               onChange={(e) => {
-                setfirstName(e.target.value)
+                setfirstname(e.target.value)
               }}
               placeholder='Firstname'
             />
             <input className='bg-[#efefef]  w-1/2 rounded px-4 py-2 border-grey  text-base placeholder:text-small '
               required
               type="text"
-              value={lastName}
+              value={lastname}
               onChange={(e) => {
-                setlastName(e.target.value)
+                setlastname(e.target.value)
               }}
               placeholder='Lastname'
             />

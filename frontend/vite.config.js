@@ -6,8 +6,6 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    hmr: {
-      overlay: false,
-    },
+    port: 5173, // Change to your desired port
   },
 });

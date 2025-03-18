@@ -1,20 +1,35 @@
 import React from 'react'
 import blackImage from "../assets/Uber_logo_2018.png"
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState, useContext } from 'react'
+import { userDataContext } from '../context/UserContext'
+import axios from 'axios'
 
 const UserLogin = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  const [userData, setuserData] = useState({});
 
-  const submitHandler = (e) => {
+  const navigate = useNavigate()
+  const { user, setUser } = useContext(userDataContext)
+
+  const submitHandler = async (e) => {
     e.preventDefault()
-    setuserData({
-      email: email,
-      password: password
-    })
-    console.log(userData)
+    try {
+      const userData = {
+        email: email,
+        password: password
+      }
+
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
+      if (response.status === 200) {
+        const data = response.data
+        setUser(data.user)
+        navigate('/home')
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+
     setemail("")
     setpassword("")
   }
