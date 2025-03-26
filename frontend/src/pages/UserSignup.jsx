@@ -12,6 +12,7 @@ const UserSignup = () => {
   const [lastname, setlastname] = useState("");
   // const [userData, setuserData] = useState({});
   const navigate = useNavigate()
+  // eslint-disable-next-line no-unused-vars
   const { user, setUser } = useContext(userDataContext)
 
   const submitHandler = async (e) => {
@@ -30,6 +31,7 @@ const UserSignup = () => {
     if (response.status === 201) {
       const data = response.data
       setUser(data.user)
+      localStorage.setItem('token', data.token)
 
       navigate('/home')
     }

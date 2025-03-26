@@ -10,6 +10,7 @@ const UserLogin = () => {
   const [password, setpassword] = useState("");
 
   const navigate = useNavigate()
+  // eslint-disable-next-line no-unused-vars
   const { user, setUser } = useContext(userDataContext)
 
   const submitHandler = async (e) => {
@@ -21,11 +22,15 @@ const UserLogin = () => {
       }
 
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
+
       if (response.status === 200) {
         const data = response.data
         setUser(data.user)
+        localStorage.setItem('token', data.token)
         navigate('/home')
+
       }
+
     } catch (error) {
       console.error('Login error:', error);
     }
